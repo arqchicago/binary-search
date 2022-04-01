@@ -68,6 +68,37 @@ def interpolation_search(array, target):
     return -999
 
 
+def jump_search(array, target, k):
+    '''
+    jump_search function performs jump search to find a target in a sorted array
+    
+    
+    :param array:   a python list containing elements
+    :param target:  a target value to be found in the array
+    :param k:  jump search performed with jump factor of k
+    
+    :return:        index of target if the target is found in the array, otherwise -999
+    '''
+    left = 0
+    last_idx = len(array)-1
+
+    while(left<=last_idx):
+        if target==array[left]:
+            return left
+        
+        else:
+            right = min(left+k, last_idx)
+
+            if target>array[left] and target<=array[right]:
+                left += 1
+
+            else:
+                left += k
+            
+            
+    return -999
+
+
 def linear_search(array, target):
     '''
     linear_search function performs linear search to find a target in a sorted array
@@ -130,3 +161,15 @@ if __name__ == "__main__":
     
     else:
         print(f'interpolation search:  index={idx},  value=NOT FOUND,  target={target_},  time={time.time()-start_time}')
+
+
+    # Jump Search
+    start_time = time.time()
+    k = 500
+    idx = jump_search(array_, target_, k)
+    
+    if idx != -999:
+        print(f'jump search:  index={idx},  value={array_[idx]},  target={target_},  time={time.time()-start_time}')
+    
+    else:
+        print(f'jump search:  index={idx},  value=NOT FOUND,  target={target_},  time={time.time()-start_time}')
