@@ -2,7 +2,7 @@ import time
 import random
 
 
-def binary_search(array, target):
+def binary_search(array, target, left=0, right = 0):
     '''
     binary_search function performs binary search to find a target in a sorted array
     
@@ -13,8 +13,12 @@ def binary_search(array, target):
     :return:        index of target if the target is found in the array, otherwise -999
     '''
     
-    left = 0
-    right = len(array)-1
+    #left = 0
+    #right = len(array)-1
+    
+    if right==0:
+        right = len(array)-1
+    
     i = 0
     while(left<=right):
         
@@ -118,6 +122,30 @@ def linear_search(array, target):
     return -999
 
 
+def exponential_search(array, target):
+    '''
+    exponential_search function performs exponential search to find a target in a sorted array
+    
+    
+    :param array:   a python list containing elements
+    :param target:  a target value to be found in the array
+    
+    :return:        index of target if the target is found in the array, otherwise -999
+    '''
+    idx = -1
+    n = len(array)
+    
+    if array[0]==target:
+        idx = 0
+    
+    i = 1
+    while i<n and array[i]<=target:
+        i = i * 2
+    
+    idx = binary_search(array, target, left=i//2, right = min(i, n-1))
+    return idx
+    
+
 if __name__ == "__main__":
     
     start_time = time.time()
@@ -173,3 +201,12 @@ if __name__ == "__main__":
     
     else:
         print(f'jump search:  index={idx},  value=NOT FOUND,  target={target_},  time={time.time()-start_time}')
+
+    start_time = time.time()
+    idx = exponential_search(array_, target_)
+    
+    if idx != -999:
+        print(f'exponential search:  index={idx},  value={array_[idx]},  target={target_},  time={time.time()-start_time}')
+    
+    else:
+        print(f'exponential search:  index={idx},  value=NOT FOUND,  target={target_},  time={time.time()-start_time}')
